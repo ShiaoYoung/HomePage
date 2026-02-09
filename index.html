@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- python -m http.server 8001 & -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+
+    <!-- 引入Vue3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- 引入element-plus样式文件 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+    <!-- 引入element-plus组件库 -->
+    <script src="https://unpkg.com/element-plus"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-container class="layout-container">
+            <el-header>
+                <!-- 快捷按钮 -->
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('http://bkzhjx.wh.sdu.edu.cn/sso.jsp')">教务系统</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://service.sdu.edu.cn/')">信息服务</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://leetcode.cn/')">力扣</el-button>
+
+
+                <el-text style="text-size-adjust: 100px; margin-left: 15px; margin-right: 15px;" size="large"
+                    @click="toPage('https://shiaoyoung.github.io')"><strong>ShiaoYoung</strong></el-text>
+
+                <!-- 快捷按钮 -->
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://chat.deepseek.com/')">DeepSeek</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://www.csdn.net/')">CSDN</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://github.com/')">GitHub</el-button>
+                <!-- <el-text style="text-size-adjust: 100px;" size="large">的主页</el-text> -->
+
+
+            </el-header>
+            <el-main style="text-align: center;">
+                <!-- 搜索引擎：暂时隐藏 -->
+                <!--                 <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>搜索引擎</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24" style="text-align: center;">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.baidu.com')">百度</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.bing.com/')">必应</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.google.com/')">谷歌</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://chat.deepseek.com/')">DeepSeek</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card> -->
+                <!-- 学校 -->
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>学校服务</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24" style="text-align: center;">
+                            <!-- 官网： -->
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.sdu.edu.cn')">山大官网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.sc.sdu.edu.cn/')">山大软院</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://shikong.sdu.edu.cn/')">时空视点</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://library.sdu.edu.cn/')">图书馆</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.sdrj.sdu.edu.cn/')">山大日记</el-button>
+                            <br>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://online.sdu.edu.cn/')">学生在线</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.youth.sdu.edu.cn/')">青春山大</el-button>
+
+                            <!-- 教学： -->
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.bkjx.sdu.edu.cn/')">本科生院</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://bkzhjx.wh.sdu.edu.cn/sso.jsp')">教务系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://icloud.qd.sdu.edu.cn:7777/#/home')">山大云盘</el-button>
+                            <br>
+                            <!-- 其他： -->
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://service.sdu.edu.cn/')">信息服务</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://211.86.56.236/')">学生管理系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://pay.sdu.edu.cn/')">缴费系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://202.194.15.87/')">校园网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://www.sd114.sdu.edu.cn:8080/web/bus/index')">交通班车</el-button>
+                            <br>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://sduyjs.sdu.edu.cn/yjszs/plugins/zs/zsxsd/entrance#/entrance')">研究生招生系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.tyb.sdu.edu.cn/')">体育学院</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://aiassist.sdu.edu.cn/')">山大AI助手</el-button>
+
+
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <!-- 课程：暂时隐藏 -->
+                <!--                 <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>课程相关</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24" style="text-align: center;">
+                            <el-button class="btn" type="danger" plain size="large"
+                                @click="toPage('./htmls/homework.html')">作业</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/NoSQL.html')">非关系型数据库</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/SoftwareEngineering.html')">软件工程</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/数值计算.html')">数值计算</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/计算机网络.html')">计算机网络</el-button>
+                            <br>
+                            <a href="D:\桌面\大学\01资料整理\大三上学期.pdf"><el-button class="btn" type="danger" plain size="large">
+                                    往年经验</el-button></a>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/数值计算.html')">数据科学导论</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/编译原理.html')">编译原理</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/人工智能导论.html')">人工智能导论</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('./htmls/操作系统课设.html')">操作系统课设</el-button>
+
+
+                        </el-col>
+                    </el-row>
+                </el-card> -->
+                <!-- 工具 -->
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>工具网站</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.csdn.net/')">CSDN</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://github.com/')">GitHub</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://element-plus.org/zh-CN/')">Element-Plus</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.bilibili.com/')">哔哩哔哩</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.iconfont.cn/')">阿里图标库</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://grok.com/')">Grok</el-button>
+                            <br>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.drawdb.app')">数据库设计</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://leetcode.cn/')">力扣</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.zhihu.com/')">知乎</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.taobao.com/')">淘宝</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.jd.com/')">京东</el-button>
+                            <br>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://mtxml.oversea.cnki.net/')">中国知网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://changjiang.yuketang.cn/v2/web/index')">雨课堂</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://rudangpx.sdu.edu.cn/')">线上党课</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.chsi.com.cn/')">学信网
+                            </el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://gitee.com/')">Gitee
+                            </el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>Touch Fish</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.douyin.com/')">Byte Dance</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+            </el-main>
+            <el-footer>ShiaoYoung的首页 ©2024 Created by ShiaoYoung</el-footer>
+        </el-container>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const userList = ref([])
+                return {
+                    userList
+                }
+            },
+            created() {
+            },
+            methods: {
+                toPage(url) {
+                    window.open(url)
+                }
+            }
+            // 全部引入ElementPlus
+        }).use(ElementPlus).mount('#app')
+    </script>
+
+    <style>
+        .layout-container {
+            height: 100vh;
+            align-items: center;
+            text-size-adjust: 40px;
+            background: url('./back.jpg') repeat center / cover;
+
+            .el-header {
+                background-color: transparent;
+                /* background-color: #fff; */
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+
+                .el-text {
+                    font-size: 30px;
+                    color: black;
+                }
+
+
+
+                /* justify-content: space-between; */
+
+                .el-dropdown__box {
+                    display: flex;
+                    align-items: center;
+
+                    &:active,
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+
+            .el-main {
+                scrollbar-width: none;
+                width: 100%;
+            }
+
+            .el-footer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                color: #666;
+            }
+        }
+
+        .btn {
+            font-size: 20px;
+            margin-top: 30px;
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 145px;
+            height: 40px;
+        }
+
+        .btn-up {
+            font-size: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 5px;
+            width: 145px;
+            height: 40px;
+        }
+
+        .card {
+            max-width: 100%;
+            margin-bottom: 30px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .card-header {
+            font-size: 20px;
+        }
+    </style>
+
+</body>
+
+</html>
