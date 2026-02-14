@@ -167,12 +167,13 @@
                         </div>
                     </template>
                     <el-row>
-                        <el-button class="btn" type="primary" plain size="large"
-                            @click="toPage('https://www.taobao.com/')">淘宝</el-button>
-                        <el-button class="btn" type="primary" plain size="large"
-                            @click="toPage('https://www.jd.com/')">京东</el-button>
-                        <el-button class="btn" type="primary" plain size="large"
-                            @click="toPage('https://www.msn.cn/zh-cn/weather')">msn天气</el-button>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.taobao.com/')">淘宝</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.jd.com/')">京东</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.msn.cn/zh-cn/weather')">msn天气</el-button>
                         </el-col>
                     </el-row>
                 </el-card>
