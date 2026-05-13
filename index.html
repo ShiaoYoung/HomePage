@@ -39,6 +39,15 @@
 
 
             </aside>
+            <aside class="quick-nav tool-nav">
+                <div class="quick-nav-title">小工具</div>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/TextChecker/')">TextChecker</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/lite-code-runner/')">CodeRunner</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/MBTI-test/')">MBTI Test</el-button>
+            </aside>
             <el-header>
                 <el-text style="text-size-adjust: 100px; margin-left: 15px; margin-right: 15px;" size="large"
                     @click="toPage('https://shiaoyoung.github.io')"><strong>ShiaoYoung</strong></el-text>
@@ -352,6 +361,10 @@
 
         .quick-nav {
             top: 122px;
+        }
+
+        .tool-nav {
+            top: 578px;
         }
 
         .quick-nav-title {
