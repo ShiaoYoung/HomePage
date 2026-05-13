@@ -18,7 +18,8 @@
 <body>
     <div id="app">
         <el-container class="layout-container">
-            <el-header>
+            <aside class="quick-nav">
+                <div class="quick-nav-title">快捷导航</div>
                 <!-- 快捷按钮 -->
                 <el-button class="btn-up" type="primary" plain size="large"
                     @click="toPage('http://bkzhjx.wh.sdu.edu.cn/sso.jsp')">教务系统</el-button>
@@ -26,10 +27,6 @@
                     @click="toPage('https://service.sdu.edu.cn/')">信息服务</el-button>
                 <el-button class="btn-up" type="primary" plain size="large"
                     @click="toPage('https://leetcode.cn/')">力扣</el-button>
-
-
-                <el-text style="text-size-adjust: 100px; margin-left: 15px; margin-right: 15px;" size="large"
-                    @click="toPage('https://shiaoyoung.github.io')"><strong>ShiaoYoung</strong></el-text>
 
                 <!-- 快捷按钮 -->
                 <el-button class="btn-up" type="primary" plain size="large"
@@ -41,6 +38,10 @@
                 <!-- <el-text style="text-size-adjust: 100px;" size="large">的主页</el-text> -->
 
 
+            </aside>
+            <el-header>
+                <el-text style="text-size-adjust: 100px; margin-left: 15px; margin-right: 15px;" size="large"
+                    @click="toPage('https://shiaoyoung.github.io')"><strong>ShiaoYoung</strong></el-text>
             </el-header>
             <el-main style="text-align: center;">
                 <!-- 搜索引擎：暂时隐藏 -->
@@ -225,79 +226,301 @@
     </script>
 
     <style>
-        .layout-container {
-            height: 100vh;
-            align-items: center;
-            text-size-adjust: 40px;
-            background: url('./back.jpg') repeat center / cover;
-
-            .el-header {
-                background-color: transparent;
-                /* background-color: #fff; */
-                display: flex;
-                align-items: center;
-                margin-bottom: 5px;
-
-                .el-text {
-                    font-size: 30px;
-                    color: black;
-                }
-
-
-
-                /* justify-content: space-between; */
-
-                .el-dropdown__box {
-                    display: flex;
-                    align-items: center;
-
-                    &:active,
-                    &:focus {
-                        outline: none;
-                    }
-                }
-            }
-
-            .el-main {
-                scrollbar-width: none;
-                width: 100%;
-            }
-
-            .el-footer {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 14px;
-                color: #666;
-            }
+        :root {
+            --page-text: #163226;
+            --muted-text: #51675b;
+            --surface: rgba(250, 252, 244, 0.66);
+            --line: rgba(74, 113, 91, 0.24);
+            --brand: #1f6f56;
+            --brand-dark: #174d3c;
+            --brand-soft: rgba(231, 242, 226, 0.9);
+            --accent: #d8a531;
+            --shadow: 0 18px 44px rgba(22, 63, 45, 0.16);
+            --button-width: 172px;
+            --button-height: 50px;
         }
 
-        .btn {
-            font-size: 20px;
-            margin-top: 30px;
-            margin-left: 20px;
-            margin-right: 20px;
-            width: 145px;
-            height: 40px;
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background-color: #edf3f8;
+            color: var(--page-text);
+            font-family: Inter, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100%;
+            margin: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: rgba(29, 102, 210, 0.16);
+        }
+
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            content: "";
+            background: url('./back.jpg') center / cover no-repeat;
+            filter: blur(2px);
+        }
+
+        .layout-container {
+            min-height: 100vh;
+            align-items: center;
+            background: transparent;
+        }
+
+        .layout-container .el-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: min(1180px, calc(100% - 32px));
+            height: auto;
+            min-height: 86px;
+            margin: 18px auto 12px;
+            padding: 16px 24px;
+            background: rgba(250, 252, 244, 0.28);
+            border: 1px solid rgba(250, 252, 244, 0.58);
+            border-radius: 8px;
+            box-shadow: 0 14px 36px rgba(22, 63, 45, 0.12);
+            backdrop-filter: blur(10px);
+        }
+
+        .layout-container .el-header .el-text {
+            margin: 0 !important;
+            color: var(--page-text);
+            font-size: clamp(36px, 5vw, 58px);
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: center;
+            text-shadow: 0 2px 12px rgba(250, 252, 244, 0.75);
+            text-wrap: balance;
+            cursor: pointer;
+        }
+
+        .layout-container .el-main {
+            width: min(1180px, calc(100% - 32px));
+            padding: 12px 0 32px;
+            scrollbar-width: none;
+        }
+
+        .layout-container .el-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: min(1180px, calc(100% - 32px));
+            height: auto;
+            min-height: 56px;
+            padding: 18px 0 26px;
+            color: var(--muted-text);
+            font-size: 15px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .layout-container .el-dropdown__box {
+            display: flex;
+            align-items: center;
+        }
+
+        .layout-container .el-dropdown__box:focus-visible {
+            outline: 3px solid rgba(29, 102, 210, 0.32);
+            outline-offset: 3px;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 24px;
+            z-index: 12;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            width: 204px;
+            padding: 16px;
+            background: rgba(250, 252, 244, 0.58);
+            border: 1px solid rgba(250, 252, 244, 0.72);
+            border-radius: 8px;
+            box-shadow: 0 16px 42px rgba(22, 63, 45, 0.16);
+            backdrop-filter: blur(8px);
+        }
+
+        .quick-nav {
+            top: 122px;
+        }
+
+        .quick-nav-title {
+            color: var(--brand-dark);
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
+            letter-spacing: 0;
+        }
+
+        .btn,
+        .btn-up {
+            width: var(--button-width);
+            min-width: var(--button-width);
+            max-width: var(--button-width);
+            height: var(--button-height);
+            margin: 0 !important;
+            padding: 0 14px;
+            overflow: hidden;
+            color: var(--brand-dark);
+            font-size: 19px;
+            font-weight: 700;
+            line-height: var(--button-height);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background: var(--brand-soft);
+            border-color: rgba(31, 111, 86, 0.34);
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(22, 63, 45, 0.1);
+            touch-action: manipulation;
+            transition:
+                color 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease,
+                transform 180ms ease;
         }
 
         .btn-up {
-            font-size: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-            margin-top: 5px;
-            width: 145px;
-            height: 40px;
+            font-size: 18px;
+        }
+
+        .btn:hover,
+        .btn-up:hover {
+            color: #fff;
+            background-color: var(--brand);
+            border-color: var(--brand);
+            box-shadow: 0 12px 24px rgba(31, 111, 86, 0.24);
+            transform: translateY(-2px);
+        }
+
+        .btn:active,
+        .btn-up:active {
+            transform: translateY(0);
+        }
+
+        .btn:focus-visible,
+        .btn-up:focus-visible,
+        .layout-container .el-header .el-text:focus-visible {
+            outline: 3px solid rgba(29, 102, 210, 0.32);
+            outline-offset: 3px;
         }
 
         .card {
+            width: 100%;
             max-width: 100%;
-            margin-bottom: 30px;
-            background-color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 24px;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid rgba(250, 252, 244, 0.72);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        .card .el-card__header {
+            padding: 18px 24px;
+            background: rgba(250, 252, 244, 0.42);
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+        }
+
+        .card .el-card__body {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .card .el-col {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .card br {
+            display: none;
         }
 
         .card-header {
-            font-size: 20px;
+            color: var(--page-text);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-align: left;
+            text-wrap: balance;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        @media (max-width: 760px) {
+
+            .layout-container .el-header,
+            .layout-container .el-main,
+            .layout-container .el-footer {
+                width: min(100% - 20px, 1180px);
+            }
+
+            .layout-container .el-header {
+                margin-top: 10px;
+                padding: 12px;
+            }
+
+            .layout-container .el-main {
+                padding: 12px 0 32px;
+            }
+
+            .btn,
+            .btn-up {
+                width: min(100%, var(--button-width));
+                min-width: 0;
+                max-width: var(--button-width);
+                font-size: 17px;
+            }
+
+            .quick-nav {
+                position: static;
+                width: min(100% - 20px, 520px);
+                margin: 0 auto 10px;
+                grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+                gap: 12px;
+            }
+
+            .layout-container .el-header {
+                flex-direction: column;
+            }
+
+            .card .el-col {
+                gap: 12px;
+            }
+
+            .card .el-card__body {
+                padding: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .btn,
+            .btn-up {
+                transition: none;
+            }
+
+            .btn:hover,
+            .btn-up:hover {
+                transform: none;
+            }
         }
     </style>
 
