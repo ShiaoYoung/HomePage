@@ -132,6 +132,29 @@
                         </el-col>
                     </el-row>
                 </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>天才智能</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://chatgpt.com/')">ChatGPT</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://grok.com/')">Grok</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://gemini.google.com/')">Gemini</el-button>
+                            <el-button class="btn-up" type="primary" plain size="large"
+                                @click="toPage('https://chat.deepseek.com/')">DeepSeek</el-button>
+                            <el-button class="btn-up" type="primary" plain size="large"
+                                @click="toPage('https://www.doubao.com/chat/')">豆包</el-button>
+                            <el-button class="btn-up" type="primary" plain size="large"
+                                @click="toPage('https://yiyan.baidu.com/')">文心一言</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
                 <!-- 工具 -->
                 <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
                     <template #header>
@@ -152,9 +175,6 @@
                             <el-button class="btn" type="primary" plain size="large"
                                 @click="toPage('https://www.iconfont.cn/')">阿里图标库</el-button>
                             <el-button class="btn" type="primary" plain size="large"
-                                @click="toPage('https://grok.com/')">Grok</el-button>
-                            <br>
-                            <el-button class="btn" type="primary" plain size="large"
                                 @click="toPage('https://cn.overleaf.com/')">OverLeaf</el-button>
                             <el-button class="btn" type="primary" plain size="large"
                                 @click="toPage('https://www.drawdb.app')">数据库设计</el-button>
@@ -166,7 +186,6 @@
                                 @click="toPage('https://www.chsi.com.cn/')">学信网</el-button>
                             <el-button class="btn" type="primary" plain size="large"
                                 @click="toPage('https://gitee.com/')">Gitee</el-button>
-                            <br>
                             <el-button class="btn" type="primary" plain size="large"
                                 @click="toPage('https://www.yuque.com/dashboard')">语雀</el-button>
                             <el-button class="btn" type="primary" plain size="large"
