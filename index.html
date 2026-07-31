@@ -376,14 +376,25 @@
             z-index: 12;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
-            width: 204px;
-            padding: 16px;
-            background: rgba(250, 252, 244, 0.58);
-            border: 1px solid rgba(250, 252, 244, 0.72);
+            gap: 0;
+            width: 58px;
+            min-height: 58px;
+            max-height: 58px;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            border: 0;
             border-radius: 8px;
-            box-shadow: 0 16px 42px rgba(22, 63, 45, 0.16);
-            backdrop-filter: blur(8px);
+            box-shadow: none;
+            backdrop-filter: none;
+            transition:
+                width 180ms ease,
+                max-height 180ms ease,
+                padding 180ms ease,
+                gap 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease;
         }
 
         .quick-nav {
@@ -391,16 +402,78 @@
         }
 
         .tool-nav {
-            top: 578px;
+            top: 196px;
+        }
+
+        .quick-nav:hover {
+            gap: 12px;
+            width: 204px;
+            max-height: 520px;
+            padding: 16px;
+            background: rgba(250, 252, 244, 0.58);
+            border: 1px solid rgba(250, 252, 244, 0.72);
+            box-shadow: 0 16px 42px rgba(22, 63, 45, 0.16);
+            backdrop-filter: blur(8px);
         }
 
         .quick-nav-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 58px;
+            min-height: 58px;
+            padding: 8px;
             color: var(--brand-dark);
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 800;
-            line-height: 1.2;
+            line-height: 1.15;
             text-align: center;
             letter-spacing: 0;
+            word-break: keep-all;
+            background: rgba(250, 252, 244, 0.74);
+            border: 1px solid rgba(250, 252, 244, 0.82);
+            border-radius: 8px;
+            box-shadow: 0 12px 28px rgba(22, 63, 45, 0.16);
+            cursor: default;
+            transition:
+                width 180ms ease,
+                min-height 180ms ease,
+                padding 180ms ease,
+                font-size 180ms ease,
+                background-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .quick-nav:hover .quick-nav-title {
+            width: auto;
+            min-height: 0;
+            padding: 0;
+            font-size: 18px;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .quick-nav .btn-up {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateX(10px);
+            transition:
+                opacity 180ms ease,
+                visibility 180ms ease,
+                transform 180ms ease,
+                color 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .quick-nav:hover .btn-up {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(0);
         }
 
         .btn,
@@ -530,11 +603,33 @@
             }
 
             .quick-nav {
-                position: static;
-                width: min(100% - 20px, 520px);
-                margin: 0 auto 10px;
-                grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
-                gap: 12px;
+                position: fixed;
+                right: 10px;
+                width: 54px;
+                min-height: 54px;
+                max-height: 54px;
+                margin: 0;
+            }
+
+            .quick-nav {
+                top: 88px;
+            }
+
+            .tool-nav {
+                top: 150px;
+            }
+
+            .quick-nav:hover {
+                width: min(100% - 20px, 204px);
+                max-height: 500px;
+                padding: 12px;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .quick-nav-title {
+                width: 54px;
+                min-height: 54px;
             }
 
             .layout-container .el-header {
