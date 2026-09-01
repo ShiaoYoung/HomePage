@@ -141,6 +141,21 @@
                 <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
                     <template #header>
                         <div class="card-header">
+                            <span>学校服务（研究生）</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://sduyjs.sdu.edu.cn/gsapp/sys/yjsemaphome/portal/index.do')">研究生管理信息系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.nc.sdu.edu.cn/info/1004/1341.htm')">山东大学电子证照平台</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
                             <span>天才智能</span>
                         </div>
                     </template>
