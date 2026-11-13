@@ -12,6 +12,12 @@ python3 -m http.server 8001
 
 然后访问 <http://localhost:8001>。无需安装前端依赖，也无需构建；现有 GitHub Pages 工作流可直接部署。
 
+## GitHub Pages 部署
+
+推送到 `main` 后会自动部署，也可以在 Actions 中选择「Deploy static content to Pages」→「Run workflow」启动新运行。
+
+部署产物按运行编号和重试次数命名，上传与部署步骤引用同一个名称，避免重跑时遇到 `Multiple artifacts named "github-pages"`。修改工作流后应推送新提交或从最新 `main` 启动运行，直接重跑旧提交的失败任务不会应用新的工作流配置。
+
 ## 维护入口
 
 - `assets/navigation.js` 中的 `categories` 定义分类、分组和站点，每个站点的 ID 应保持唯一。`keywords` 用于补充别名和搜索词，`description` 和 `badges` 可选，显示在悬停提示中并参与搜索。
