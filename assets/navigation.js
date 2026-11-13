@@ -439,6 +439,64 @@
   const favoriteOptions = document.querySelector("#favorite-options");
   const favoritesFilter = document.querySelector("#favorites-filter");
   const settingsError = document.querySelector("#favorites-settings-error");
+  const nativeSettingsDialog = typeof settingsDialog.showModal === "function";
+  const pageShell = document.querySelector(".page-shell");
+  const settingsOverlay = document.createElement("div");
+  settingsOverlay.className = "settings-overlay";
+  settingsOverlay.hidden = true;
+  settingsOverlay.setAttribute("aria-hidden", "true");
+  document.body.append(settingsOverlay);
+  const settingsAreOpen = () => settingsDialog.hasAttribute("open");
+  const finishClosingSettings = () => {
+    settingsOverlay.hidden = true;
+    document.body.classList.remove("settings-open");
+    pageShell.removeAttribute("aria-hidden");
+    editFavorites.focus({ preventScroll: true });
+  };
+  const closeSettings = () => {
+    if (nativeSettingsDialog) settingsDialog.close();
+    else {
+      settingsDialog.removeAttribute("open");
+      finishClosingSettings();
+    }
+  };
+  const showSettings = () => {
+    document.body.classList.add("settings-open");
+    if (nativeSettingsDialog) settingsDialog.showModal();
+    else {
+      settingsDialog.classList.add("settings-fallback");
+      settingsDialog.setAttribute("role", "dialog");
+      settingsDialog.setAttribute("aria-modal", "true");
+      settingsDialog.setAttribute("open", "");
+      settingsOverlay.hidden = false;
+      pageShell.setAttribute("aria-hidden", "true");
+    }
+  };
+  document.addEventListener("keydown", (event) => {
+    if (nativeSettingsDialog || !settingsAreOpen()) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeSettings();
+    } else if (event.key === "Tab") {
+      const controls = [...settingsDialog.querySelectorAll("button:not(:disabled), input, [tabindex='0']")]
+        .filter((control) => control.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && (active === first || !controls.includes(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !controls.includes(active))) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  document.addEventListener("focusin", (event) => {
+    if (!nativeSettingsDialog && settingsAreOpen() && !settingsDialog.contains(event.target)) {
+      document.querySelector("#favorites-settings-title").focus();
+    }
+  });
 
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -588,14 +646,14 @@
     settingsError.hidden = true;
     renderFavoriteOptions();
     renderDraftFavorites();
-    settingsDialog.showModal();
+    showSettings();
     document.querySelector("#favorites-settings-title").focus({ preventScroll: true });
   });
   favoritesFilter.addEventListener("input", renderFavoriteOptions);
   for (const id of ["close-favorites-settings", "cancel-favorites-settings"]) {
-    document.getElementById(id).addEventListener("click", () => settingsDialog.close());
+    document.getElementById(id).addEventListener("click", closeSettings);
   }
-  settingsDialog.addEventListener("close", () => editFavorites.focus({ preventScroll: true }));
+  settingsDialog.addEventListener("close", finishClosingSettings);
   document.querySelector("#restore-favorites").addEventListener("click", () => {
     draftFavoriteIds = validFavoriteIds(defaultFavoriteIds);
     favoritesFilter.value = "";
@@ -612,7 +670,7 @@
     }
     favoriteIds = [...draftFavoriteIds];
     renderFavorites();
-    settingsDialog.close();
+    closeSettings();
   });
 
   const renderDirectory = () => {
