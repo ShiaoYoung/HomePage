@@ -63,8 +63,11 @@
             <section id="favorites" class="section-card favorites" aria-labelledby="favorites-heading">
                 <div class="section-heading">
                     <h2 id="favorites-heading">常用</h2>
+                    <button id="edit-favorites" class="settings-trigger" type="button" aria-haspopup="dialog"
+                        aria-controls="favorites-settings">设置</button>
                 </div>
                 <ul id="favorite-links" class="link-grid"></ul>
+                <p id="favorites-empty" class="favorites-empty" hidden>尚未添加常用站点。</p>
             </section>
 
             <div id="directory" class="directory"></div>
@@ -81,6 +84,38 @@
 
         <footer class="page-footer">ShiaoYoung 的个人导航 <span aria-hidden="true">·</span> © <span id="year">2026</span></footer>
     </div>
+
+    <dialog id="favorites-settings" class="settings-dialog" aria-labelledby="favorites-settings-title"
+        aria-describedby="favorites-settings-help">
+        <header class="settings-dialog-header">
+            <h2 id="favorites-settings-title" tabindex="-1">常用设置</h2>
+            <button id="close-favorites-settings" class="settings-action" type="button" aria-label="关闭常用设置">关闭</button>
+        </header>
+        <p id="favorites-settings-help" class="settings-help">勾选站点添加到常用，使用上移、下移调整顺序。</p>
+        <div class="settings-content">
+            <section class="settings-panel" aria-labelledby="selected-favorites-heading">
+                <h3 id="selected-favorites-heading" tabindex="-1">常用顺序 <span id="selected-favorites-count"></span></h3>
+                <ol id="selected-favorites" class="selected-favorites"></ol>
+                <p id="selected-favorites-empty" class="settings-empty" hidden>尚未选择站点。</p>
+            </section>
+            <section class="settings-panel" aria-labelledby="available-favorites-heading">
+                <h3 id="available-favorites-heading">选择站点</h3>
+                <label class="sr-only" for="favorites-filter">筛选可选站点</label>
+                <input id="favorites-filter" class="favorites-filter" type="search" placeholder="筛选站点"
+                    autocomplete="off" spellcheck="false" aria-controls="favorite-options">
+                <div id="favorite-options" class="favorite-options"></div>
+                <p id="favorite-options-empty" class="settings-empty" hidden>没有匹配的站点。</p>
+            </section>
+        </div>
+        <p id="favorites-settings-error" class="settings-error" role="alert" hidden></p>
+        <footer class="settings-dialog-footer">
+            <button id="restore-favorites" class="settings-action" type="button">恢复默认</button>
+            <div class="settings-footer-actions">
+                <button id="cancel-favorites-settings" class="settings-action" type="button">取消</button>
+                <button id="save-favorites" class="settings-action settings-primary" type="button">保存</button>
+            </div>
+        </footer>
+    </dialog>
 </body>
 
 </html>

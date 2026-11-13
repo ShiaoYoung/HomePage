@@ -401,7 +401,7 @@
     },
   ];
 
-  const favoriteIds = [
+  const defaultFavoriteIds = [
     "graduate-portal",
     "information",
     "network",
@@ -413,12 +413,32 @@
     category.groups.flatMap((group) => group.links),
   );
   const sitesById = new Map(allSites.map((link) => [link.id, link]));
+  const favoritesStorageKey = "shiaoyoung.homepage.favorites.v1";
+  const validFavoriteIds = (ids) =>
+    [...new Set(ids.filter((id) => typeof id === "string" && sitesById.has(id)))];
+  const loadFavoriteIds = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(favoritesStorageKey));
+      if (Array.isArray(saved)) return validFavoriteIds(saved);
+    } catch {
+      // A blocked or malformed local setting must not prevent navigation.
+    }
+    return validFavoriteIds(defaultFavoriteIds);
+  };
+  let favoriteIds = loadFavoriteIds();
+  let draftFavoriteIds = [];
   const searchInput = document.querySelector("#site-search");
   const clearButton = document.querySelector("#clear-search");
   const favorites = document.querySelector("#favorites");
   const directory = document.querySelector("#directory");
   const emptyState = document.querySelector("#empty-state");
   const searchStatus = document.querySelector("#search-status");
+  const editFavorites = document.querySelector("#edit-favorites");
+  const settingsDialog = document.querySelector("#favorites-settings");
+  const selectedFavorites = document.querySelector("#selected-favorites");
+  const favoriteOptions = document.querySelector("#favorite-options");
+  const favoritesFilter = document.querySelector("#favorites-filter");
+  const settingsError = document.querySelector("#favorites-settings-error");
 
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -447,11 +467,15 @@
     return list;
   };
 
-  const favoriteGrid = createLinkGrid(
-    favoriteIds.map((id) => sitesById.get(id)),
-  );
-  favoriteGrid.id = "favorite-links";
-  document.querySelector("#favorite-links").replaceWith(favoriteGrid);
+  const renderFavorites = () => {
+    const favoriteGrid = createLinkGrid(
+      favoriteIds.map((id) => sitesById.get(id)),
+    );
+    favoriteGrid.id = "favorite-links";
+    document.querySelector("#favorite-links").replaceWith(favoriteGrid);
+    document.querySelector("#favorites-empty").hidden = favoriteIds.length !== 0;
+  };
+  renderFavorites();
   document.querySelector("#year").textContent = new Date().getFullYear();
 
   const normalize = (text) =>
@@ -477,6 +501,119 @@
       }
     }
   }
+
+  const renderDraftFavorites = (focusTarget) => {
+    const fragment = document.createDocumentFragment();
+    draftFavoriteIds.forEach((id, index) => {
+      const link = sitesById.get(id);
+      const item = element("li", "selected-favorite");
+      item.dataset.siteId = id;
+      item.tabIndex = -1;
+      item.append(element("span", "selected-favorite-name", `${index + 1}. ${link.name}`));
+      const actions = element("div", "selected-favorite-actions");
+      const addAction = (label, action, disabled, handler) => {
+        const button = element("button", "settings-action", label);
+        button.type = "button";
+        button.dataset.action = action;
+        button.disabled = disabled;
+        button.setAttribute("aria-label", `${label} ${link.name}`);
+        button.addEventListener("click", handler);
+        actions.append(button);
+      };
+      const move = (offset, action) => {
+        const destination = index + offset;
+        [draftFavoriteIds[index], draftFavoriteIds[destination]] =
+          [draftFavoriteIds[destination], draftFavoriteIds[index]];
+        renderDraftFavorites({ id, action });
+      };
+      addAction("上移", "up", index === 0, () => move(-1, "up"));
+      addAction("下移", "down", index === draftFavoriteIds.length - 1, () => move(1, "down"));
+      addAction("移除", "remove", false, () => {
+        draftFavoriteIds = draftFavoriteIds.filter((selectedId) => selectedId !== id);
+        const nextId = draftFavoriteIds[Math.min(index, draftFavoriteIds.length - 1)];
+        renderDraftFavorites({ id: nextId });
+      });
+      item.append(actions);
+      fragment.append(item);
+    });
+    selectedFavorites.replaceChildren(fragment);
+    document.querySelector("#selected-favorites-count").textContent = `（${draftFavoriteIds.length}）`;
+    document.querySelector("#selected-favorites-empty").hidden = draftFavoriteIds.length !== 0;
+    for (const checkbox of favoriteOptions.querySelectorAll("input[type=checkbox]")) {
+      checkbox.checked = draftFavoriteIds.includes(checkbox.value);
+    }
+    if (focusTarget) {
+      const row = [...selectedFavorites.children].find((item) => item.dataset.siteId === focusTarget.id);
+      const button = focusTarget.action && row?.querySelector(`[data-action="${focusTarget.action}"]:not(:disabled)`);
+      (button || row || document.querySelector("#selected-favorites-heading")).focus({ preventScroll: true });
+    }
+  };
+
+  const renderFavoriteOptions = () => {
+    const terms = normalize(favoritesFilter.value).split(/\s+/).filter(Boolean);
+    const fragment = document.createDocumentFragment();
+    let count = 0;
+    for (const category of categories) {
+      const links = category.groups.flatMap((group) => group.links).filter((link) =>
+        terms.every((term) => searchTexts.get(link.id).includes(term)),
+      );
+      if (!links.length) continue;
+      const group = element("fieldset", "favorite-option-group");
+      group.append(element("legend", "", category.name));
+      for (const link of links) {
+        const label = element("label", "favorite-choice");
+        const checkbox = element("input");
+        checkbox.type = "checkbox";
+        checkbox.value = link.id;
+        checkbox.checked = draftFavoriteIds.includes(link.id);
+        checkbox.addEventListener("change", () => {
+          draftFavoriteIds = checkbox.checked
+            ? [...draftFavoriteIds, link.id]
+            : draftFavoriteIds.filter((id) => id !== link.id);
+          renderDraftFavorites();
+        });
+        label.append(checkbox, element("span", "", link.name));
+        group.append(label);
+        count++;
+      }
+      fragment.append(group);
+    }
+    favoriteOptions.replaceChildren(fragment);
+    document.querySelector("#favorite-options-empty").hidden = count !== 0;
+  };
+
+  editFavorites.addEventListener("click", () => {
+    draftFavoriteIds = [...favoriteIds];
+    favoritesFilter.value = "";
+    settingsError.hidden = true;
+    renderFavoriteOptions();
+    renderDraftFavorites();
+    settingsDialog.showModal();
+    document.querySelector("#favorites-settings-title").focus({ preventScroll: true });
+  });
+  favoritesFilter.addEventListener("input", renderFavoriteOptions);
+  for (const id of ["close-favorites-settings", "cancel-favorites-settings"]) {
+    document.getElementById(id).addEventListener("click", () => settingsDialog.close());
+  }
+  settingsDialog.addEventListener("close", () => editFavorites.focus({ preventScroll: true }));
+  document.querySelector("#restore-favorites").addEventListener("click", () => {
+    draftFavoriteIds = validFavoriteIds(defaultFavoriteIds);
+    favoritesFilter.value = "";
+    renderFavoriteOptions();
+    renderDraftFavorites();
+  });
+  document.querySelector("#save-favorites").addEventListener("click", () => {
+    try {
+      localStorage.setItem(favoritesStorageKey, JSON.stringify(draftFavoriteIds));
+    } catch {
+      settingsError.textContent = "无法保存到浏览器，请允许本站使用本地存储后重试。";
+      settingsError.hidden = false;
+      return;
+    }
+    favoriteIds = [...draftFavoriteIds];
+    renderFavorites();
+    settingsDialog.close();
+  });
 
   const renderDirectory = () => {
     const query = normalize(searchInput.value);
