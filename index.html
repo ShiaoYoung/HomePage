@@ -9,6 +9,11 @@
     <title>ShiaoYoung · 导航</title>
     <script>
         (() => {
+            try {
+                if (localStorage.getItem("shiaoyoung.homepage.theme.v1") === "sdu-red") {
+                    document.documentElement.dataset.theme = "sdu-red";
+                }
+            } catch { /* Keep the default theme when storage is unavailable. */ }
             // Disable restored positions and stale anchors before the page is rendered.
             if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
@@ -25,8 +30,8 @@
             window.addEventListener("pageshow", showPageTop);
         })();
     </script>
-    <link rel="stylesheet" href="./assets/styles.css?v=20261113-safari">
-    <script src="./assets/navigation.js?v=20261113-safari" defer></script>
+    <link rel="stylesheet" href="./assets/styles.css?v=20261113-themes2">
+    <script src="./assets/navigation.js?v=20261113-themes2" defer></script>
 </head>
 
 <body>
@@ -34,6 +39,10 @@
     <a class="skip-link" href="#main">跳到导航内容</a>
 
     <div class="page-shell">
+        <div class="theme-toolbar">
+            <button id="theme-toggle" class="settings-action theme-toggle" type="button"
+                aria-label="山大红主题" aria-pressed="false">山大红</button>
+        </div>
         <header class="page-header">
             <h1><a href="https://shiaoyoung.github.io" target="_blank" rel="noopener noreferrer"
                     aria-label="打开 ShiaoYoung 的主页（新标签页）">ShiaoYoung</a><span>·导航</span></h1>

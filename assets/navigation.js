@@ -1,6 +1,23 @@
 "use strict";
 
 (() => {
+  const themeToggle = document.querySelector("#theme-toggle");
+  const themeStorageKey = "shiaoyoung.homepage.theme.v1";
+  const applyTheme = (theme) => {
+    const red = theme === "sdu-red";
+    if (red) document.documentElement.dataset.theme = "sdu-red";
+    else document.documentElement.removeAttribute("data-theme");
+    themeToggle.textContent = red ? "森林绿" : "山大红";
+    themeToggle.title = red ? "切换到森林绿主题" : "切换到山大红主题";
+    themeToggle.setAttribute("aria-pressed", String(red));
+    document.querySelector('meta[name="theme-color"]').content = red ? "#9c0c13" : "#1f604b";
+  };
+  applyTheme(document.documentElement.dataset.theme);
+  themeToggle.addEventListener("click", () => {
+    const theme = document.documentElement.dataset.theme === "sdu-red" ? "forest" : "sdu-red";
+    applyTheme(theme);
+    try { localStorage.setItem(themeStorageKey, theme); } catch { /* Switching still works for this visit. */ }
+  });
   // Each destination is defined once. Favorites refer to these stable IDs.
   const site = (id, name, url, keywords = "", details = {}) => ({
     id,
