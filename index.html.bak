@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- python -m http.server 8001 & -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+
+    <!-- 引入Vue3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- 引入element-plus样式文件 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+    <!-- 引入element-plus组件库 -->
+    <script src="https://unpkg.com/element-plus"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-container class="layout-container">
+            <aside class="quick-nav">
+                <div class="quick-nav-title">快捷导航</div>
+                <!-- 快捷按钮 -->
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('http://bkzhjx.wh.sdu.edu.cn/sso.jsp')">教务系统</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://service.sdu.edu.cn/')">信息服务</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://leetcode.cn/')">力扣</el-button>
+
+                <!-- 快捷按钮 -->
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://chat.deepseek.com/')">DeepSeek</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://www.csdn.net/')">CSDN</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://github.com/')">GitHub</el-button>
+                <!-- <el-text style="text-size-adjust: 100px;" size="large">的主页</el-text> -->
+
+
+            </aside>
+            <aside class="quick-nav tool-nav">
+                <div class="quick-nav-title">小工具</div>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/TextChecker/')">TextChecker</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/lite-code-runner/')">CodeRunner</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/MBTI-test/')">MBTI Test</el-button>
+                <el-button class="btn-up" type="primary" plain size="large"
+                    @click="toPage('https://shiaoyoung.github.io/SVG2PNG/')">SVG2PNG</el-button>
+            </aside>
+            <el-header>
+                <el-text style="text-size-adjust: 100px; margin-left: 15px; margin-right: 15px;" size="large"
+                    @click="toPage('https://shiaoyoung.github.io')"><strong>ShiaoYoung</strong></el-text>
+            </el-header>
+            <el-main style="text-align: center;">
+                <!-- 搜索引擎：暂时隐藏 -->
+                <!--                 <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>搜索引擎</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24" style="text-align: center;">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.baidu.com')">百度</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.bing.com/')">必应</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.google.com/')">谷歌</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://chat.deepseek.com/')">DeepSeek</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card> -->
+                <!-- 学校 -->
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>学校服务</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24" style="text-align: center;">
+                            <!-- 官网： -->
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.sdu.edu.cn')">山大官网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.sc.sdu.edu.cn/')">山大软院</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://shikong.sdu.edu.cn/')">时空视点</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://library.sdu.edu.cn/')">图书馆</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.sdrj.sdu.edu.cn/')">山大日记</el-button>
+                            <br>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://online.sdu.edu.cn/')">学生在线</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.youth.sdu.edu.cn/')">青春山大</el-button>
+
+                            <!-- 教学： -->
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.bkjx.sdu.edu.cn/')">本科生院</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://bkzhjx.wh.sdu.edu.cn/sso.jsp')">教务系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://icloud.qd.sdu.edu.cn:7777/#/home')">山大云盘</el-button>
+                            <br>
+                            <!-- 其他： -->
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://service.sdu.edu.cn/')">信息服务</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://211.86.56.236/')">学生管理系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://pay.sdu.edu.cn/')">缴费系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://202.194.15.87/')">校园网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://www.sd114.sdu.edu.cn:8080/web/bus/index')">交通班车</el-button>
+                            <br>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://sduyjs.sdu.edu.cn/yjszs/plugins/zs/zsxsd/entrance#/entrance')">研究生招生系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.tyb.sdu.edu.cn/')">体育学院</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://aiassist.sdu.edu.cn/')">山大AI助手</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://rudangpx.sdu.edu.cn/')">线上党课</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://co2.cnki.net/Login.html?dp=sdu')">毕业设计</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://xplt.sdu.edu.cn/llm')">模型广场</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('http://www.job.sdu.edu.cn')">就业创业</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://css.sdu.edu.cn:8800/login')">校园网配置</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>学校服务（研究生）</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://urp.sdu.edu.cn/')">财务信息门户</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://sduyjs.sdu.edu.cn/gsapp/sys/yjsemaphome/portal/index.do')">研究信息系统</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.nc.sdu.edu.cn/info/1004/1341.htm')">电子证照平台</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>天才智能</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://chatgpt.com/')">ChatGPT</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://grok.com/')">Grok</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://gemini.google.com/')">Gemini</el-button>
+                            <el-button class="btn-up" type="primary" plain size="large"
+                                @click="toPage('https://chat.deepseek.com/')">DeepSeek</el-button>
+                            <el-button class="btn-up" type="primary" plain size="large"
+                                @click="toPage('https://www.doubao.com/chat/')">豆包</el-button>
+                            <el-button class="btn-up" type="primary" plain size="large"
+                                @click="toPage('https://yiyan.baidu.com/')">文心一言</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <!-- 工具 -->
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>工具网站</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.csdn.net/')">CSDN</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://github.com/')">GitHub</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://element-plus.org/zh-CN/')">Element-Plus</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.bilibili.com/')">哔哩哔哩</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.iconfont.cn/')">阿里图标库</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://cn.overleaf.com/')">OverLeaf</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.drawdb.app')">数据库设计</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://leetcode.cn/')">力扣</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.zhihu.com/')">知乎</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.chsi.com.cn/')">学信网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://gitee.com/')">Gitee</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.yuque.com/dashboard')">语雀</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://mtxml.oversea.cnki.net/')">中国知网</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://changjiang.yuketang.cn/v2/web/index')">雨课堂</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>生活</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.taobao.com/')">淘宝</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.jd.com/')">京东</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.msn.cn/zh-cn/weather')">msn天气</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.xiaohongshu.com/')">小红书</el-button>
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://ditu.amap.com/')">高德地图</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+                <el-card class="card" style="max-width: 100%; margin-bottom: 30px;" shadow="hover">
+                    <template #header>
+                        <div class="card-header">
+                            <span>Touch Fish</span>
+                        </div>
+                    </template>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-button class="btn" type="primary" plain size="large"
+                                @click="toPage('https://www.douyin.com/')">Byte Dance</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+            </el-main>
+            <el-footer>ShiaoYoung的首页 ©2026 Created by ShiaoYoung</el-footer>
+        </el-container>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const userList = ref([])
+                return {
+                    userList
+                }
+            },
+            created() {
+            },
+            methods: {
+                toPage(url) {
+                    window.open(url)
+                }
+            }
+            // 全部引入ElementPlus
+        }).use(ElementPlus).mount('#app')
+    </script>
+
+    <style>
+        :root {
+            --page-text: #163226;
+            --muted-text: #51675b;
+            --surface: rgba(250, 252, 244, 0.66);
+            --line: rgba(74, 113, 91, 0.24);
+            --brand: #1f6f56;
+            --brand-dark: #174d3c;
+            --brand-soft: rgba(231, 242, 226, 0.9);
+            --accent: #d8a531;
+            --shadow: 0 18px 44px rgba(22, 63, 45, 0.16);
+            --button-width: 172px;
+            --button-height: 50px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background-color: #edf3f8;
+            color: var(--page-text);
+            font-family: Inter, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100%;
+            margin: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: rgba(29, 102, 210, 0.16);
+        }
+
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            content: "";
+            background: url('./back.jpg') center / cover no-repeat;
+            filter: blur(2px);
+        }
+
+        .layout-container {
+            min-height: 100vh;
+            align-items: center;
+            background: transparent;
+        }
+
+        .layout-container .el-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: min(1180px, calc(100% - 32px));
+            height: auto;
+            min-height: 86px;
+            margin: 18px auto 12px;
+            padding: 16px 24px;
+            background: rgba(250, 252, 244, 0.28);
+            border: 1px solid rgba(250, 252, 244, 0.58);
+            border-radius: 8px;
+            box-shadow: 0 14px 36px rgba(22, 63, 45, 0.12);
+            backdrop-filter: blur(10px);
+        }
+
+        .layout-container .el-header .el-text {
+            margin: 0 !important;
+            color: var(--page-text);
+            font-size: clamp(36px, 5vw, 58px);
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: center;
+            text-shadow: 0 2px 12px rgba(250, 252, 244, 0.75);
+            text-wrap: balance;
+            cursor: pointer;
+        }
+
+        .layout-container .el-main {
+            width: min(1180px, calc(100% - 32px));
+            padding: 12px 0 32px;
+            scrollbar-width: none;
+        }
+
+        .layout-container .el-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: min(1180px, calc(100% - 32px));
+            height: auto;
+            min-height: 56px;
+            padding: 18px 0 26px;
+            color: var(--muted-text);
+            font-size: 15px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .layout-container .el-dropdown__box {
+            display: flex;
+            align-items: center;
+        }
+
+        .layout-container .el-dropdown__box:focus-visible {
+            outline: 3px solid rgba(29, 102, 210, 0.32);
+            outline-offset: 3px;
+        }
+
+        .quick-nav {
+            position: fixed;
+            right: 24px;
+            z-index: 12;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+            width: 58px;
+            min-height: 58px;
+            max-height: 58px;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            border: 0;
+            border-radius: 8px;
+            box-shadow: none;
+            backdrop-filter: none;
+            transition:
+                width 180ms ease,
+                max-height 180ms ease,
+                padding 180ms ease,
+                gap 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .quick-nav {
+            top: 122px;
+        }
+
+        .tool-nav {
+            top: 196px;
+        }
+
+        .quick-nav:hover {
+            gap: 12px;
+            width: 204px;
+            max-height: 520px;
+            padding: 16px;
+            background: rgba(250, 252, 244, 0.58);
+            border: 1px solid rgba(250, 252, 244, 0.72);
+            box-shadow: 0 16px 42px rgba(22, 63, 45, 0.16);
+            backdrop-filter: blur(8px);
+        }
+
+        .quick-nav-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 58px;
+            min-height: 58px;
+            padding: 8px;
+            color: var(--brand-dark);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: center;
+            letter-spacing: 0;
+            word-break: keep-all;
+            background: rgba(250, 252, 244, 0.74);
+            border: 1px solid rgba(250, 252, 244, 0.82);
+            border-radius: 8px;
+            box-shadow: 0 12px 28px rgba(22, 63, 45, 0.16);
+            cursor: default;
+            transition:
+                width 180ms ease,
+                min-height 180ms ease,
+                padding 180ms ease,
+                font-size 180ms ease,
+                background-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .quick-nav:hover .quick-nav-title {
+            width: auto;
+            min-height: 0;
+            padding: 0;
+            font-size: 18px;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .quick-nav .btn-up {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateX(10px);
+            transition:
+                opacity 180ms ease,
+                visibility 180ms ease,
+                transform 180ms ease,
+                color 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .quick-nav:hover .btn-up {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        .btn,
+        .btn-up {
+            width: var(--button-width);
+            min-width: var(--button-width);
+            max-width: var(--button-width);
+            height: var(--button-height);
+            margin: 0 !important;
+            padding: 0 14px;
+            overflow: hidden;
+            color: var(--brand-dark);
+            font-size: 19px;
+            font-weight: 700;
+            line-height: var(--button-height);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background: var(--brand-soft);
+            border-color: rgba(31, 111, 86, 0.34);
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(22, 63, 45, 0.1);
+            touch-action: manipulation;
+            transition:
+                color 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease,
+                transform 180ms ease;
+        }
+
+        .btn-up {
+            font-size: 18px;
+        }
+
+        .btn:hover,
+        .btn-up:hover {
+            color: #fff;
+            background-color: var(--brand);
+            border-color: var(--brand);
+            box-shadow: 0 12px 24px rgba(31, 111, 86, 0.24);
+            transform: translateY(-2px);
+        }
+
+        .btn:active,
+        .btn-up:active {
+            transform: translateY(0);
+        }
+
+        .btn:focus-visible,
+        .btn-up:focus-visible,
+        .layout-container .el-header .el-text:focus-visible {
+            outline: 3px solid rgba(29, 102, 210, 0.32);
+            outline-offset: 3px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 24px;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid rgba(250, 252, 244, 0.72);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        .card .el-card__header {
+            padding: 18px 24px;
+            background: rgba(250, 252, 244, 0.42);
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+        }
+
+        .card .el-card__body {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .card .el-col {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .card br {
+            display: none;
+        }
+
+        .card-header {
+            color: var(--page-text);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-align: left;
+            text-wrap: balance;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        @media (max-width: 760px) {
+
+            .layout-container .el-header,
+            .layout-container .el-main,
+            .layout-container .el-footer {
+                width: min(100% - 20px, 1180px);
+            }
+
+            .layout-container .el-header {
+                margin-top: 10px;
+                padding: 12px;
+            }
+
+            .layout-container .el-main {
+                padding: 12px 0 32px;
+            }
+
+            .btn,
+            .btn-up {
+                width: min(100%, var(--button-width));
+                min-width: 0;
+                max-width: var(--button-width);
+                font-size: 17px;
+            }
+
+            .quick-nav {
+                position: fixed;
+                right: 10px;
+                width: 54px;
+                min-height: 54px;
+                max-height: 54px;
+                margin: 0;
+            }
+
+            .quick-nav {
+                top: 88px;
+            }
+
+            .tool-nav {
+                top: 150px;
+            }
+
+            .quick-nav:hover {
+                width: min(100% - 20px, 204px);
+                max-height: 500px;
+                padding: 12px;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .quick-nav-title {
+                width: 54px;
+                min-height: 54px;
+            }
+
+            .layout-container .el-header {
+                flex-direction: column;
+            }
+
+            .card .el-col {
+                gap: 12px;
+            }
+
+            .card .el-card__body {
+                padding: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .btn,
+            .btn-up {
+                transition: none;
+            }
+
+            .btn:hover,
+            .btn-up:hover {
+                transform: none;
+            }
+        }
+    </style>
+
+</body>
+
+</html>
